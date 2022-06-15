@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+id: <input id="id" type="text"><br>
+pw: <input id="pw" type="password"><br>
+<input id="a" type="submit" value="확인1">
+<button id="b">확인2</button>
+<p></p>
+
+<script src="http://code.jquery.com/jquery-1.10.1.js"></script>
+<script>
+$("#id").val("aaaaaaaaaa");
+    $("#a").click(function () { 
+    	console.log("확인1 클릭")
+        $("p").text($("#id").val());
+    });
+    $("#b").click(function () { 
+    	console.log("확인2 클릭")
+        $("p").text($("#pw").val());
+    });
+
+</script>
+</body>
+</html>

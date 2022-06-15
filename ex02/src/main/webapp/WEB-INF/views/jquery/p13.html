@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<script>
+
+                $(document).ready(function () {
+                    $("input").focus(function () {
+                        $(this).css("background-color", "yellow");
+                    });
+
+                                $("input").blur(function () {
+                                    $(this).css("background-color", "white");
+                                });
+                });
+
+    </script>
+<body>
+아이디:<input type="text" name="name"><br>
+</body>
+</html>
