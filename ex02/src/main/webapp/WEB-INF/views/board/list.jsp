@@ -51,7 +51,7 @@
                            		 <a href="/board/list?pageNum=${num}&amount=${pageMaker.cri.amount}">                            	
                            		<!-- 현재페이지를 ${param.pageNum} or ${pageMaker.cri.pageNum} or ${critera.pageNum} -->
                            		  <c:if test="${pageMaker.cri.pageNum == num}" >
-                           		  <b> ${num } </b>
+                           		  <b> ${num} </b>
                            		  </c:if>
                            		  
                            		  <c:if test="${pageMaker.cri.pageNum != num}" >
