@@ -35,7 +35,7 @@
                             <br>
                             
                             <button class="btn btn-info " onclick="location.href='/board/modify?bno=${board.bno}'">변경하기</button>
-                            <button class="btn btn-success " onclick="location.href='/board/list'">목록보기</button>
+                            <button class="btn btn-success " onclick="location.href='/board/list?pageNum=${criteria.pageNum}&amount=${criteria.amount}'">목록보기</button>
                        </div>
                         <!-- /.panel-body -->
                     </div>

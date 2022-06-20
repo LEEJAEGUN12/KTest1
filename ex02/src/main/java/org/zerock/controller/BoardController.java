@@ -48,8 +48,9 @@ public class BoardController {
 	}
 	
 	//조회 /get?bno=13(get) -> /board/get.jsp , 수정화면 열기 /modify(get)-> /board/modify.jsp
+	//->변경 /get?bno=13&pageNum=2&amount=10
 	@GetMapping({"/get","/modify"})
-	public void get(Long bno, Model model) {
+	public void get(Long bno, Criteria cri, Model model) {
 		model.addAttribute("board", service.get(bno));	
 	}
 	
