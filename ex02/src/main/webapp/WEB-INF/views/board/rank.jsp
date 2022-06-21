@@ -6,7 +6,7 @@
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">게시판</h1>
+                    <h1 class="page-header">랭킹보기</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -15,27 +15,16 @@
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            게시글 등록
+                            1위부터 3위
                         <!-- /.panel-heading -->
                         <div class="panel-body">
  
- 						<form action="/board/register" method="post">
-	 						
-	 						<label>제목</label>
-	 						<input class="form-control" placeholder="제목을 적어주세요" type="text" name="title" required>	
-	 						
-	 						<br> 						
-	 						<label>내용</label>
-	 						<textarea class="form-control" placeholder="내용을 적어주세요" name="content" rows="3" required></textarea>
-	 						
-	 						<br>
-	 						<label>작성자</label>
-	 						<input class="form-control" placeholder="작성자를 적어주세요" type="text" name="writer" required>
-	 						
-	 						<br>
-	 						<button type="submit" class="btn btn-outline btn-default">글등록</button>
-	 					    <button type="reset" class="btn btn-outline btn-default">다시쓰기</button>
-	 					</form>
+ 					<c:forEach items="${rank}"  var="temp">
+작성자: ${temp.writer} 글개수: ${temp.cn}     <br>
+</c:forEach>
+
+<button  type="button"  onclick='location.href="/board/list?pageNum=${criteria.pageNum}&amount=${criteria.amount}"'>목록보기</button>
+	 				
  
  
  

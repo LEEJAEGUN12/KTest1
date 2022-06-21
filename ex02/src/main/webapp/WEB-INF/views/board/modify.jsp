@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-        
-<%@ include file="../includes/header.jsp" %>        
-       
+    
+<%@ include file="../includes/header.jsp" %>    
+
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
@@ -16,31 +16,38 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             게시글 변경하기
-                        </div>
-                       
+                        <!-- /.panel-heading -->
                         <div class="panel-body">
-                           
-                           <form action="/board/modify" method="post">
-                            <input type="hidden" value="${board.bno }" name="bno">
-                            
-                            <label>제목</label>
-                            <input class="form-control"  type="text" name="title" value="${board.title }">
-                           
-                            <br>
-                            <label>내용</label>
-                            <textarea class="form-control"  name="content" rows="3" >${board.content }</textarea>
-                            
-                            <br>
-                            <label>작성자</label>
-                            <input class="form-control"  type="text" name="writer" value="${board.writer }" >
-                           
-                            <br>
-                            <button type="submit" class="btn btn-info ">수정</button>
-                            <button type="button" id="deleteButton" class="btn btn-warning">삭제</button>
-                            <button class="btn btn-success" onclick="location.href='/board/list'">목록보기</button>
-                         
-                       </form>
-                       </div>
+ 
+ 						
+	 						<form action="/board/modify" method="post">
+	 						
+	 						<input type="hidden" value="${board.bno }"  name="bno">
+	 						
+	 						<input type="hidden" value="${criteria.pageNum }"  name="pageNum">
+	 						<input type="hidden" value="${criteria.amount }"  name="amount">
+	 						
+	 						<label>제목</label>
+	 						<input class="form-control"  type="text" name="title"   value="${board.title } ">	
+	 						
+	 						<br> 						
+	 						<label>내용</label>
+	 						<textarea class="form-control"  name="content" rows="3" >${board.content } </textarea>
+	 						
+	 						<br>
+	 						<label>작성자</label>
+	 						<input class="form-control"  type="text" name="writer"  value="${board.writer }" >
+	 						
+	 						<br>
+	 					
+	 						<button type="submit" class="btn btn-warning">수정</button>
+	 						<button type="submit" id="deleteButton" class="btn btn-warning" >삭제</button>
+	 						<button type="button" class="btn btn-info" onclick="location.href='/board/list?pageNum=${criteria.pageNum }&amount=${criteria.amount }'">목록보기</button>
+	 						</form>
+ 
+ 
+ 
+                        </div>
                         <!-- /.panel-body -->
                     </div>
                     <!-- /.panel -->
@@ -68,14 +75,15 @@
 <script>
 //삭제 버튼이 클릭되었을때 동작
 var formObj=$("form");
-$("#deleteButton").on("click",function(e){
-	e.preventDefault();	//기본적으로 걸려있는 이벤트 무시
+$("#deleteButton").on("click",function(e){ 
+	e.preventDefault(); //기본적으로 걸려있는 이벤트 무시(submit)
 	
 	formObj.attr("action","/board/remove");
 	formObj.submit();
 });
+
+
 </script>
-   
 
 </body>
 

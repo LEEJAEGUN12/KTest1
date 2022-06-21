@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-        
-<%@ include file="../includes/header.jsp" %>        
-        
+    
+<%@ include file="../includes/header.jsp" %>    
+
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
@@ -15,8 +15,8 @@
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            게시판 목록보기	<a href="/board/register">글등록</a>&nbsp;&nbsp;&nbsp;&nbsp; 총글개수 ${pageMaker.total}
-                           
+                            게시판 목록보기 <a href="/board/register">글등록</a> &nbsp;&nbsp;&nbsp;&nbsp; 총글개수(${pageMaker.total})
+                            &nbsp;&nbsp; <a href="/board/rank?pageNum=${pageMaker.cri.pageNum}&amount=${pageMaker.cri.amount}">랭킹</a>  
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
@@ -30,40 +30,60 @@
                                         <th>수정일</th>
                                     </tr>
                                 </thead>
+                             
                                 <tbody>
-           <c:forEach var="board" items="${list}">
-                                    <tr class="odd gradeX">
-                                        <td>${board.bno}</td>
-                                        <td><a href="/board/get?bno=${board.bno}&pageNum=${pageMaker.cri.pageNum}&amount=${pageMaker.cri.amount}">${board.title}</a></td>
-                                        <td><c:out value="${board.writer}"></c:out></td>
-                                        <td><fmt:formatDate pattern="yyyy-MM-dd" value="${board.regdate}"/></td>
-                                        <td><fmt:formatDate pattern="MM-dd hh:mm" value="${board.updatedate}"/></td>
-                                    </tr>
-           </c:forEach>
-                                    
+
+   
+   
+<c:forEach var="board" items="${list}" >              
+                                  <tr class="odd gradeX">
+                                   <td>${board.bno}</td>
+                                   <td><a href="/board/get?bno=${board.bno}&pageNum=${pageMaker.cri.pageNum}&amount=${pageMaker.cri.amount}">${board.title}</a></td>
+                                   <td><c:out value="${board.writer}"/></td>
+                                   <td><fmt:formatDate pattern="yyyy-MM-dd" value="${board.regdate }"/></td>
+                                   <td><fmt:formatDate pattern="MM-dd hh:mm" value="${board.updatedate}"/></td>
+                                 </tr>
+ </c:forEach>     
                                    </tbody>
                             </table>
-                           <c:if test="${pageMaker.prev }">
-                           		<a href="/board/list?pageNum=${pageMaker.startPage-1 }&&amount=${pageMaker.cri.amount}"> << </a>&nbsp;&nbsp;&nbsp;&nbsp;
-                           </c:if>
+    <form action="/board/list" method="get">                        
+   <select name="type">
+    <option >검색조건</option>
+   	<option ${pageMaker.cri.type =="T" ? selected : "" } value="T">제목</option>
+   	<option ${pageMaker.cri.type =="C" ? selected : "" } value="C">내용</option>
+   	<option ${pageMaker.cri.type =="W" ? selected : "" } value="W">작성자</option>
+   	<option ${pageMaker.cri.type =="TC" ? selected : "" } value="TC">제목 or 내용</option>
+   	<option ${pageMaker.cri.type =="TW" ? selected : "" } value="TW">제목 or 작성자</option>
+   	<option ${pageMaker.cri.type =="CW" ? selected : "" } value="CW">내용 or 작성자</option>
+   	<option ${pageMaker.cri.type =="TCW" ? selected : "" } value="TCW">제목 or 내용 or 작성자</option>
+   </select>     
+   <input type="text" name="keyword" value="${pageMaker.cri.keyword }"> 
+   <input type="submit" value="검색">                      
+   </form> 
+   <br>                        
+                            <c:if test="${pageMaker.prev}">
+                            <a href="/board/list?pageNum=${pageMaker.startPage-1}&&amount=${pageMaker.cri.amount}"> prev </a>  &nbsp;&nbsp;&nbsp;&nbsp;
+                            </c:if>
                             
-                           <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="num">
-                           		 <a href="/board/list?pageNum=${num}&amount=${pageMaker.cri.amount}">                            	
-                           		<!-- 현재페이지를 ${param.pageNum} or ${pageMaker.cri.pageNum} or ${critera.pageNum} -->
-                           		  <c:if test="${pageMaker.cri.pageNum == num}" >
-                           		  <b> ${num} </b>
-                           		  </c:if>
-                           		  
-                           		  <c:if test="${pageMaker.cri.pageNum != num}" >
-                           		   ${num }
-                           		  </c:if>
-                           		                           
-                           		</a> &nbsp;&nbsp;&nbsp;&nbsp;
-                           </c:forEach>
-                           
-                           <c:if test="${pageMaker.next }">
-                           		<a href="/board/list?pageNum=${pageMaker.endPage+1 }&&amount=${pageMaker.cri.amount}"> next </a> 
-                           </c:if>
+                            <c:forEach begin="${pageMaker.startPage}"  end="${pageMaker.endPage}" var="num">
+                            	 <a href="/board/list?pageNum=${num}&amount=${pageMaker.cri.amount}&type=${pageMaker.cri.type}&keyword=${pageMaker.cri.keyword}">
+  <%-- 현재페이지를 ${param.pageNum } or ${pageMaker.cri.pageNum } or ${critera.pageNum} --%>
+                            	 <c:if test="${pageMaker.cri.pageNum == num }" >
+                            	 	<b>${num} </b>
+                            	 </c:if>
+	                            
+	                             <c:if test="${pageMaker.cri.pageNum != num }" >
+                            	 	${num} 
+                            	 </c:if>
+
+                            	
+                            	 </a> &nbsp;&nbsp;&nbsp;&nbsp;
+                            </c:forEach>
+                            
+                            <c:if test="${pageMaker.next}">
+                            	<a href="/board/list?pageNum=${pageMaker.endPage+1}&&amount=${pageMaker.cri.amount}"> next </a>
+                            </c:if>
+                            
                         </div>
                         
                         <!-- /.panel-body -->
@@ -76,7 +96,9 @@
         <!-- /#page-wrapper -->
 
     </div>
-  
+    <!-- /#wrapper -->
+
+
                             <!-- Modal -->
                             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
@@ -86,7 +108,7 @@
                                             <h4 class="modal-title" id="myModalLabel">Modal title</h4>
                                         </div>
                                         <div class="modal-body">
-                                          	${bno }번 글이 등록되었습니다.
+                                              ${bno}번 글이 등록되었습니다.
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -98,6 +120,10 @@
                                 <!-- /.modal-dialog -->
                             </div>
                             <!-- /.modal -->
+
+
+
+
     <!-- jQuery -->
     <script src="/resources/vendor/jquery/jquery.min.js"></script>
 
@@ -112,23 +138,24 @@
 
 <script>
 //입력된 글번호 알려주기
-var bno = "${bno}";	//읽히는 순서 page->request->session->application
-var state = "${state}";
+var bno = "${bno}";  //읽히는 순서 page->request->session->application
+var state ="${state}";
 console.log("등록된 글번호는:"+bno);
 
 
 
 //알고있어야 하는내용
-//1.history.replaceState(data, title, url) 히스토리 상태값을 변경해주는 매소드
-//2.history.state 히스토리 상태값을 읽는것(history.replaceState()미사용시 null)
-if(history.state){	//javascript에서는 null이면 false
-	console.log("히스토리 상태값이 있다.");
+//1.history.replaceState(data,title,url) 히스토리 상태값을 변경해주는 메소드
+//2.history.state 히스토리상태값을 읽는것(history.replaceState()미사용시 null)
+if(history.state){   //javascript에서는 null이면 false  
+	console.log("히스토리 상태값이 있다.");	
 }else{
-	console.log("히스토리 상태값이 없다.");
-}	//크롬에서 바로전 뒤로가기 일때는 변경된 내용이 확인안된다. (why? 크롬에서 바로전 바로가기일때는 내부적으로 모달창 같은거 동작안되게 뭔가 작업을 해놔서)
+	console.log("히스토리 상태값이 없다.");	
+}  //크롬에서 바로전 뒤로가기 일때는 변경된 내용이 확인안된다. (why? 크롬에서 바로전 바로가기일때는
+	//내부적으로 모달창 같은어 동작안되게 뭔가 작업을 해놔서)
 
 
-if(bno!="" && !history.state){	//글번호가 있고
+if(bno!="" && !history.state){   //글번호가 있고
 		$("#myModal").modal("show");
 }
 if(state=="remove" && !history.state){
@@ -139,8 +166,16 @@ if(state=="remove" && !history.state){
 	$("#myModal").modal("show");
 }
 history.replaceState({},null,null);
-</script>   
+
+
+</script>
+
 
 </body>
+
+
+
+
+
 
 </html>
